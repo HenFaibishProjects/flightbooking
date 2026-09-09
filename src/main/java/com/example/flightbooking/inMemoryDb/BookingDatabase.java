@@ -43,11 +43,6 @@ public class BookingDatabase implements FlightRepository {
     }
 
 
-    public List<FlightBooking> findAll() {
-        return store.values().stream().toList(); // .toList() is a modern Java feature
-    }
-
-
     public List<FlightBooking> findByRoute(String origin, String destination) {
         return store.values().stream()
                 .filter(b -> b.origin().equalsIgnoreCase(origin) &&

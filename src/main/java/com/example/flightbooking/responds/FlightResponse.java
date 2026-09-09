@@ -1,13 +1,13 @@
 package com.example.flightbooking.responds;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 public record FlightResponse(
         String origin,
         String destination,
         String airline,
-        String numberOfSeats,
-        LocalDateTime departureTime
+        int numberOfSeats,
+        Instant departureTime
 
 ) {
 }

@@ -1,5 +1,6 @@
 package com.example.flightbooking.services;
 
+import com.example.flightbooking.exceptions.FlightNotFoundException;
 import com.example.flightbooking.inMemoryDb.BookingDatabase;
 import com.example.flightbooking.requests.FlightSearchRequest;
 import com.example.flightbooking.responds.FlightResponse;
@@ -17,5 +18,25 @@ public class FlightService {
     }
 
     public List<FlightResponse> searchFlights(@Valid FlightSearchRequest request) {
+        return bookingDatabase.search(
+                        request.origin(),
+                        request.destination(),
+                        request.airline(),
+                        request.departureDate()
+                )
+                .orElseThrow(() ->
+                        new FlightNotFoundException(
+                                "Flight not found: " + request
+                        )
+                )
+                .stream()
+                .map(flight -> new FlightResponse(
+                        flight.origin(),
+                        flight.destination(),
+                        flight.airline(),
+                        flight.availableSeats(),
+                        flight.flightDate()
+                ))
+                .toList();
     }
 }
