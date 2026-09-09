@@ -1,6 +1,7 @@
 package com.example.flightbooking.requests;
 
 import jakarta.validation.constraints.FutureOrPresent;
+import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
@@ -10,6 +11,7 @@ public record FlightSearchRequest(
         @NotBlank String origin,
         @NotBlank String destination,
         String airline,
+        @NotBlank @Min(1) int numberOfTickets,
         @NotNull @FutureOrPresent LocalDate departureDate
 
 ) {

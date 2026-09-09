@@ -67,6 +67,7 @@ public class BookingDatabase implements FlightRepository {
     }
 
 
+    @Override
     public List<FlightBooking> findAll() {
         return store.values().stream().toList();
     }
@@ -117,19 +118,16 @@ public class BookingDatabase implements FlightRepository {
     }
 
     @Override
-    public Optional<List<FlightBooking>> search(String origin, String destination, String airline, LocalDate departureDate) {
+    public Optional<List<FlightBooking>> search(String origin, String destination, LocalDate departureDate) {
         LOGGER.debug(
-                "Searching flights: origin={}, destination={}, airline={}, departureDate={}",
-                origin, destination, airline, departureDate
+                "Searching flights: origin={}, destination={}, departureDate={}",
+                origin, destination, departureDate
         );
 
         List<FlightBooking> matchingFlights = store.values().stream()
                 .filter(flight -> flight.origin().equalsIgnoreCase(origin))
                 .filter(flight -> flight.destination().equalsIgnoreCase(destination))
-                .filter(flight -> airline == null || airline.isBlank()
-                        || flight.airline() != null && flight.airline().equalsIgnoreCase(airline))
                 .filter(flight -> flight.flightDate().atZone(ZoneOffset.UTC).toLocalDate().equals(departureDate))
-                .filter(flight -> flight.availableSeats() > 0)
                 .toList();
 
         LOGGER.debug(

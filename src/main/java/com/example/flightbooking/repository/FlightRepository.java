@@ -8,5 +8,11 @@ import java.util.Optional;
 
 public interface FlightRepository {
 
-    Optional<List<FlightBooking>> search(String origin, String destination, String airline, LocalDate departureDate);
+    /**
+     * Retrieves flights matching the given route and departure date only.
+     * Airline and seat-availability filtering are business concerns applied by the caller.
+     */
+    Optional<List<FlightBooking>> search(String origin, String destination, LocalDate departureDate);
+
+    List<FlightBooking> findAll();
 }

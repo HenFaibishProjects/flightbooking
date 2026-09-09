@@ -1,5 +1,6 @@
 package com.example.flightbooking.controllers;
 
+import com.example.flightbooking.domain.FlightBooking;
 import com.example.flightbooking.requests.FlightSearchRequest;
 import com.example.flightbooking.responds.FlightResponse;
 import com.example.flightbooking.services.FlightService;
@@ -27,5 +28,10 @@ public class SearchController {
     @GetMapping("/search")
     public List<FlightResponse> searchFlights(@Valid @ModelAttribute FlightSearchRequest request) {
         return flightService.searchFlights(request);
+    }
+
+    @GetMapping("/all")
+    public List<FlightBooking> getAllFlights() {
+        return flightService.getAllFlights();
     }
 }
