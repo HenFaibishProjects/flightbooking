@@ -1,3 +1,8 @@
 spring:
   application:
     name: flightbooking
+
+app:
+  seed:
+    enabled: true
+    count: 1000

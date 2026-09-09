@@ -43,6 +43,16 @@ public class BookingDatabase implements FlightRepository {
     }
 
 
+    public boolean isEmpty() {
+        return store.isEmpty();
+    }
+
+
+    public int size() {
+        return store.size();
+    }
+
+
     public List<FlightBooking> findByRoute(String origin, String destination) {
         return store.values().stream()
                 .filter(b -> b.origin().equalsIgnoreCase(origin) &&
