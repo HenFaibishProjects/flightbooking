@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface FlightRepository {
 
-    Optional<List<FlightBooking>> search(String origin, String destination, LocalDate departureDate);
+    Optional<List<FlightBooking>> search(String origin, String destination, String airline, LocalDate departureDate);
 }

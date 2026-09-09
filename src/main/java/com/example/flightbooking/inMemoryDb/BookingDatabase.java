@@ -1,14 +1,19 @@
 package com.example.flightbooking.inMemoryDb;
 
 import com.example.flightbooking.domain.FlightBooking;
+import com.example.flightbooking.repository.FlightRepository;
+import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
+import java.time.ZoneOffset;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.concurrent.ConcurrentHashMap;
 
-public class BookingDatabase {
+@Repository
+public class BookingDatabase implements FlightRepository {
 
     // The actual in-memory storage
     private final Map<UUID, FlightBooking> store = new ConcurrentHashMap<>();
@@ -24,6 +29,7 @@ public class BookingDatabase {
                 booking.destination(),
                 booking.airline(),
                 booking.numberOfTickets(),
+                booking.availableSeats(),
                 booking.flightDate()
         );
 
@@ -57,5 +63,19 @@ public class BookingDatabase {
 
     public void clear() {
         store.clear();
+    }
+
+    @Override
+    public Optional<List<FlightBooking>> search(String origin, String destination, String airline, LocalDate departureDate) {
+        List<FlightBooking> matchingFlights = store.values().stream()
+                .filter(flight -> flight.origin().equalsIgnoreCase(origin))
+                .filter(flight -> flight.destination().equalsIgnoreCase(destination))
+                .filter(flight -> airline == null || airline.isBlank()
+                        || flight.airline() != null && flight.airline().equalsIgnoreCase(airline))
+                .filter(flight -> flight.flightDate().atZone(ZoneOffset.UTC).toLocalDate().equals(departureDate))
+                .filter(flight -> flight.availableSeats() > 0)
+                .toList();
+
+        return matchingFlights.isEmpty() ? Optional.empty() : Optional.of(matchingFlights);
     }
 }

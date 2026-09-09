@@ -9,6 +9,7 @@ public record FlightBooking(
         String destination,
         String airline,
         int numberOfTickets,
+        int availableSeats,
         Instant flightDate
 ) {
     public FlightBooking {
