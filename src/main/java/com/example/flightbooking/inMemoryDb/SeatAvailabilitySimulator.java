@@ -25,6 +25,9 @@ public class SeatAvailabilitySimulator {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SeatAvailabilitySimulator.class);
     private static final int MAX_FLIGHTS_PER_RUN = 20;
+    private static final int MAX_SEAT_DELTA = 5;
+    private static final int MIN_AVAILABLE_SEATS = 0;
+    private static final int MAX_AVAILABLE_SEATS = 180;
 
     private final BookingDatabase bookingDatabase;
     private final Random random;
@@ -83,7 +86,9 @@ public class SeatAvailabilitySimulator {
     private int randomAvailableSeats(int currentAvailableSeats) {
         int availableSeats;
         do {
-            availableSeats = random.nextInt(4) == 0 ? 0 : random.nextInt(1, 181);
+            // Random delta in [-MAX_SEAT_DELTA, +MAX_SEAT_DELTA], clamped to the valid seat range.
+            int delta = random.nextInt(2 * MAX_SEAT_DELTA + 1) - MAX_SEAT_DELTA;
+            availableSeats = Math.clamp(currentAvailableSeats + delta, MIN_AVAILABLE_SEATS, MAX_AVAILABLE_SEATS);
         } while (availableSeats == currentAvailableSeats);
         return availableSeats;
     }

@@ -32,7 +32,7 @@ class FlightServiceTest {
         FlightService service = new FlightService(database);
 
         List<FlightResponse> results = service.searchFlights(
-                new FlightSearchRequest("london", "PARIS", null, DEPARTURE_DATE)
+                new FlightSearchRequest("london", "PARIS", null, 1, DEPARTURE_DATE)
         );
 
         assertEquals(1, results.size());
@@ -48,13 +48,13 @@ class FlightServiceTest {
         FlightService service = new FlightService(database);
 
         List<FlightResponse> filtered = service.searchFlights(
-                new FlightSearchRequest("London", "Paris", "skyjet", DEPARTURE_DATE)
+                new FlightSearchRequest("London", "Paris", "skyjet", 1, DEPARTURE_DATE)
         );
         List<FlightResponse> unfiltered = service.searchFlights(
-                new FlightSearchRequest("London", "Paris", null, DEPARTURE_DATE)
+                new FlightSearchRequest("London", "Paris", null, 1, DEPARTURE_DATE)
         );
         List<FlightResponse> blankAirline = service.searchFlights(
-                new FlightSearchRequest("London", "Paris", "  ", DEPARTURE_DATE)
+                new FlightSearchRequest("London", "Paris", "  ", 1, DEPARTURE_DATE)
         );
 
         assertEquals(1, filtered.size());
@@ -72,7 +72,7 @@ class FlightServiceTest {
         FlightService service = new FlightService(database);
 
         List<FlightResponse> results = service.searchFlights(
-                new FlightSearchRequest("London", "Paris", null, DEPARTURE_DATE)
+                new FlightSearchRequest("London", "Paris", null, 1, DEPARTURE_DATE)
         );
 
         assertEquals(1, results.size());
@@ -85,7 +85,7 @@ class FlightServiceTest {
         FlightService service = new FlightService(database);
 
         assertThrows(FlightNotFoundException.class, () -> service.searchFlights(
-                new FlightSearchRequest("London", "Paris", null, DEPARTURE_DATE)
+                new FlightSearchRequest("London", "Paris", null, 1, DEPARTURE_DATE)
         ));
     }
 
@@ -98,7 +98,7 @@ class FlightServiceTest {
         FlightService service = new FlightService(database);
 
         FlightNotFoundException exception = assertThrows(FlightNotFoundException.class, () -> service.searchFlights(
-                new FlightSearchRequest("London", "Paris", null, DEPARTURE_DATE)
+                new FlightSearchRequest("London", "Paris", null, 1, DEPARTURE_DATE)
         ));
         assertTrue(exception.getMessage().contains("Flight not found"));
     }
@@ -112,7 +112,7 @@ class FlightServiceTest {
         FlightService service = new FlightService(database);
 
         assertThrows(FlightNotFoundException.class, () -> service.searchFlights(
-                new FlightSearchRequest("London", "Paris", "NoSuchAirline", DEPARTURE_DATE)
+                new FlightSearchRequest("London", "Paris", "NoSuchAirline", 1, DEPARTURE_DATE)
         ));
     }
 
