@@ -85,7 +85,6 @@ public class FlightDataInitializer implements ApplicationRunner {
                 route.origin(),
                 route.destination(),
                 variant == 0 ? route.firstAirline() : route.secondAirline(),
-                random.nextInt(1, 7),
                 availableSeats(index, random),
                 startingDate.plusDays(dayOffset).atTime(departureTime).toInstant(ZoneOffset.UTC)
         );

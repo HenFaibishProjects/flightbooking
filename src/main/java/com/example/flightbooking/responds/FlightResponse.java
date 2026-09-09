@@ -6,7 +6,7 @@ public record FlightResponse(
         String origin,
         String destination,
         String airline,
-        int numberOfSeats,
+        int availableSeats,
         Instant departureTime
 
 ) {

@@ -6,3 +6,16 @@ app:
   seed:
     enabled: true
     count: 1000
+  seat-simulator:
+    enabled: true
+    interval-ms: 10000
+
+# To see DEBUG logs for searches, saves, and deletes, set:
+# logging:
+#   level:
+#     com.example.flightbooking.services.FlightService: DEBUG
+#     com.example.flightbooking.inMemoryDb.BookingDatabase: DEBUG
+logging:
+  level:
+    com.example.flightbooking.services.FlightService: INFO
+    com.example.flightbooking.inMemoryDb.BookingDatabase: INFO
